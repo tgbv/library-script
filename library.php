@@ -8,10 +8,10 @@ require_once("inc/lib.php");
 
 header("Cache-Control: no-cache, no-store", true);
 
-/*if(!USER :: check_login())
+if(!USER :: check_login())
 {
 	header("Location: /index.php", true, 301);
-}*/
+}
 
 if(isset($_COOKIE["history"]))
 {
