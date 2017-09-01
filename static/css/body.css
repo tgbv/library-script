@@ -1,0 +1,7 @@
+body{
+	background-image: url("../images/imagedoc-darknoise.png");
+	background-color: rgb(33, 33, 33);
+}
+
+a{text-decoration: none; color: green;}
+a:hover{text-decoration: underline; color: red;}
