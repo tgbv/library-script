@@ -1,7 +1,48 @@
-body{
-	background-image: url("../images/imagedoc-darknoise.png");
-	background-color: rgb(33, 33, 33);
-}
-
-a{text-decoration: none; color: green;}
-a:hover{text-decoration: underline; color: red;}
+			a:hover{text-decoration: underline; color: red;}
+		
+			.__a_head
+			{
+				text-decoration: none !important; 
+				color: white !important; 
+				font-size: 20px !important;
+			}
+			
+			.__a_tab_head
+			{
+				text-decoration: none !important; 
+				color: white !important; 
+			}
+			
+			.__div_header
+			{
+				font-size: 25px;
+				color: yellow;
+				font-family: Sans-serif;
+				text-transform: lowercase;
+			}
+			
+			.__div_header:first-letter
+			{
+				text-transform: uppercase;
+			}
+			
+			.__yellow
+			{
+				color: yellow;
+			}
+			
+			.__green 
+			{
+				color: green;
+			}
+			
+			.__titles
+			{
+				font-size: 25px;
+			}
+			
+			.input-field input[type=text]:focus
+			{
+				border-bottom: 1px solid grey !important;
+				box-shadow: 0 1px 0 0 grey !important;
+			}

@@ -4,11 +4,12 @@
 //
 // Started: 23/08/2017
 
-require_once("inc/lib.php");
+require_once("inc/ml_lib.php");
+require_once("inc/ml_html_data.php");
 
 header("Cache-Control: no-cache, no-store", true);
 
-if(!USER :: check_login())
+if(!($ret = new ADMIN()) -> check_login())
 {
 	header("Location: /index.php", true, 301);
 }
@@ -35,113 +36,59 @@ if(!isset($_POST["author"]) && !isset($_POST["title"]) && !isset($_POST["number"
 	$_POST["description"] = "";
 }
 
-?>
+	print('
+	<!DOCTYPE HTML>
+		<html lang="EN">');
 
-<!DOCTYPE HTML>
+	////////////////////<head>
+	print(HTML_GENERATE :: head("My Library"));
+	////////////////////</head>
+	
+	print('<body>');
+	print(HTML_GENERATE :: header("The library", "library.php", "t___1"));
+	print(__SEPARATOR_H_M);
 
-<html lang="EN">
-	<head>
-		<title>My Library</title>
-		
-		<link type="text/css" rel="stylesheet" href="static/css/google.1.css">
-		<link type="text/css" rel="stylesheet" href="static/css/google.2.css">
-		<link type="text/css" rel="stylesheet" href="static/css/materialize.min.css">
-		<!--<link type="text/css" rel="stylesheet" href="static/css/body.css">-->
-		
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;" />
-		<meta name="android-mobile-web-app-capable" content="yes" />	
-		
-		<script type="text/javascript" src="static/js/jquery.min.js"></script>
-		<script type="text/javascript" src="static/js/materialize.min.js"></script>
-		
-		<style>
-			a:hover{text-decoration: underline; color: red;}
-		
-			.__div_header
-			{
-				font-size: 40px;
-				color: yellow;
-			}
-			
-			.__yellow
-			{
-				color: yellow;
-			}
-			
-			.__green 
-			{
-				color: green;
-			}
-			
-			.__titles
-			{
-				font-size: 25px;
-			}
-
-		</style>
-	</head>
-
-	<body>
-		<header>
-			<div class="center purple darken-3">
-				<br>
-				<div class="__div_header">My Library</div>
-				<b>[</b>
-					<a href="logout.php">log out</a>
-				<b>]</b>
-				<br>
-				<br>
-			</div>
-		</header>
-		
-		<br>
-		
-		<script type="text/javascript">
-<?php 
 	if($_POST["author"] && $_POST["title"] && $_POST["number"] && $_POST["description"])
 	{
 		$ret = REGISTER :: reg_book($_POST["author"], $_POST["title"], $_POST["number"], $_POST["description"]);
 		
-		print('Materialize.toast("' . $ret . '", 5000)');
+		print('<script type="text/javascript">Materialize.toast("' . $ret . '", 5000)</script>');
 	}
 ?>
-		</script>
-		
-		<main>
-			<div class="section">			
-				<div class="row">
-					<div class="col s5 m5 l3">
-						<div class="__titles">
-							Search for book
-						</div>
-						
-						<br>
-						
-						<form action="library.php" method="GET">
-							<table>
-								<tbody>
-									<tr>
-										<td>
-											<input type="text" name="search" placeholder="Can be authors, titles, numbers ...">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<button class="btn" type="submit">Search</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
+	<main>
+		<div class="section">			
+			<div class="row">
+				<div class="col s12 m12 l4">
+					<div class="__titles">
+						Search for book
 					</div>
 					
-					<div class="col s10 l6">
-						<div class="__titles">
-							Search results:
-						</div>
-						
-						<br>
+					<br>
+					
+					<form action="library.php" method="GET">
+						<table>
+							<tbody class="input-field">
+								<tr>
+									<td>
+										<input type="text" name="search" placeholder="Can be authors, titles, numbers ...">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<button class="btn grey darken-2 waves-effect waves-dark" type="submit">Search</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+				
+				<div class="col s12 s12 l6">
+					<div class="__titles">
+						Search results:
+					</div>
+					
+					<br>
 					
 <?php 
 	if(isset($_GET["search"]) && $_GET["search"])
@@ -159,7 +106,7 @@ if(!isset($_POST["author"]) && !isset($_POST["title"]) && !isset($_POST["number"
 			is_array($ret) ? $ret = array_reverse($ret) : null;
 		}
 		
-		if($ret !== false)
+		if(is_array($ret))
 		{
 			print('<table class="striped responsive-table">
 					<thead>
@@ -236,104 +183,108 @@ if(!isset($_POST["author"]) && !isset($_POST["title"]) && !isset($_POST["number"
 			print('		</tbody>
 					</table>');
 		}
-		else
+		else if($ret === false)
 		{
 			print('<span style="color:red;">No records found...</span>');
 		}
+		else
+		{
+			print('<span style="color:red;">' . $ret . '</span>');
+		}
 	}
 ?>
-					</div>
 				</div>
 			</div>
-			
-			<!------------->
-			
-			<div class="divider"></div>
-			<br>
-			<div class="section">
-				<div class="row">
-					<div class="col s10 m10 l3">
-						<div class="__titles">
-							Register book
-						</div>
-						
-						<form action="<?php print($_COOKIE["history"]); ?>" method="POST">
-							<table class="responsive-table">
-								<tbody>
-									<tr>
-										<td>
-											<div>Author</div>
-										</td>
-										<td>
-											<input type="text" name="author" class="validate" placeholder="...">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div>Title</div>
-										</td>
-										<td>
-											<input type="text" name="title" class="validate" placeholder="...">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div>Number</div>
-										</td>
-										<td>
-											<input type="text" name="number" class="validate" placeholder="...">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div>Description</div>
-										</td>
-										<td>
-											<textarea name="description" class="validate" style="height: 100px;" maxlength="256"></textarea>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<button class="btn" type="submit">Register</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
+		</div>
+		
+		<!------------->
+		
+		<div class="divider"></div>
+		<br>
+		<div class="section">
+			<div class="row">
+				<div class="col s12 m12 l4">
+					<div class="__titles">
+						Register book
 					</div>
 					
-					<div class="col s10 l6">
-						<div class="__titles">
-							Latest registered books
-						</div>
-						<br>
-						<table class="striped responsive-table">
-							<thead>
+					<form action="<?php print($_COOKIE["history"]); ?>" method="POST">
+						<table class="responsive-table">
+							<tbody class="input-field">
 								<tr>
 									<td>
-										<center>
-											<a href="?latest_order=id&asc=1" id="latest_id"><b style="color: green;">ID</b></a>
-										</center>
+										<div>Author</div>
 									</td>
 									<td>
-										<center>
-											<a href="?latest_order=author&asc=1" id="latest_author"><b style="color: green;">Author</b></a>
-										</center>
-									</td>
-									<td>
-										<center>
-											<a href="?latest_order=title&asc=1" id="latest_title"><b style="color: green;">Title</b></a>
-										</center>
-									</td>
-									<td>
-										<center>
-											<a href="?latest_order=number&asc=1" id="latest_number"><b style="color: green;">Number</b></a>
-										</center>
+										<input type="text" name="author" class="validate" placeholder="...">
 									</td>
 								</tr>
-							</thead>
-							
-							<tbody>
+								<tr>
+									<td>
+										<div>Title</div>
+									</td>
+									<td>
+										<input type="text" name="title" class="validate" placeholder="...">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div>Number</div>
+									</td>
+									<td>
+										<input type="text" name="number" class="validate" placeholder="...">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div>Description</div>
+									</td>
+									<td>
+										<textarea name="description" class="validate" style="height: 100px;" maxlength="256"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<button class="btn grey darken-2 waves-effect waves-dark" type="submit">Register</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+				
+				<div class="col s12 m12 l6">
+					<div class="__titles">
+						Latest registered books
+					</div>
+					<br>
+					<table class="striped responsive-table">
+						<thead>
+							<tr>
+								<td>
+									<center>
+										<a href="?latest_order=id&asc=1" id="latest_id"><b style="color: green;">ID</b></a>
+									</center>
+								</td>
+								<td>
+									<center>
+										<a href="?latest_order=author&asc=1" id="latest_author"><b style="color: green;">Author</b></a>
+									</center>
+								</td>
+								<td>
+									<center>
+										<a href="?latest_order=title&asc=1" id="latest_title"><b style="color: green;">Title</b></a>
+									</center>
+								</td>
+								<td>
+									<center>
+										<a href="?latest_order=number&asc=1" id="latest_number"><b style="color: green;">Number</b></a>
+									</center>
+								</td>
+							</tr>
+						</thead>
+						
+						<tbody>
 <?php 
 	if(isset($_GET["latest_order"]) && isset($_GET["asc"]) && $_GET["latest_order"] && $_GET["asc"])
 	{
@@ -389,12 +340,12 @@ if(!isset($_POST["author"]) && !isset($_POST["title"]) && !isset($_POST["number"
 		print("</tr>");
 	}
 ?>
-							</tbody>
-						</table>
-					</div>
+						</tbody>
+					</table>
 				</div>
 			</div>
-		</main>
+		</div>
+	</main>
 		
 		<footer>
 		</footer>
