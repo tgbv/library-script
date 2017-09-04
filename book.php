@@ -208,7 +208,14 @@ if(!isset($_POST["id"]) && !isset($_POST["author"]) && !isset($_POST["title"]) &
 		');
 	}
 
-	print(HTML_GENERATE :: book_actions($_GET["id"], $_COOKIE["history"]));
+	if(isset($_GET["tab"]) && $_GET["tab"] === "close")
+	{
+		print(HTML_GENERATE :: book_actions($_GET["id"], "close"));
+	}
+	else
+	{
+		print(HTML_GENERATE :: book_actions($_GET["id"], $_COOKIE["history"]));
+	}
 
 	print("</div></main>");
 	

@@ -117,7 +117,15 @@ class HTML_GENERATE
 	static function book_actions($a, $b)
 	{
 		$ret = preg_replace('/@\$__id/', $a, __BOOK_ACTIONS);
-		$ret = preg_replace('/@\$__history/', $b, $ret);
+		
+		if($b === "close")
+		{
+			$ret = preg_replace('/window.location = \'@\$__history\'/', 'window.close()', $ret);
+		}
+		else
+		{
+			$ret = preg_replace('/@\$__history/', $b, $ret);
+		}
 		
 		return $ret;
 	}

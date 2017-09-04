@@ -62,6 +62,20 @@ if(!isset($_POST["id"]) && !isset($_POST["customer"]) && !isset($_POST["phone_nu
 			define("RENT_BOOK_ID", $ret["book_id"]);	
 			define("RENT_NOTES", $ret["notes"]);
 			define("RENT_TIME", $ret["time"]);
+			
+			if($ret = $mysql -> check("SELECT id, title FROM ml_books WHERE ml_books.id REGEXP '" . RENT_BOOK_ID . "';"))
+			{
+				$ret = mysqli_fetch_all($ret);
+				
+				foreach($ret as $k => $v)
+				{
+					foreach($v as $x => $y)
+					{
+						if($x === 0) $BOOK_ID[$k] = $y;
+						if($x === 1) $BOOK_TITLE[$k] = $y;
+					}
+				}
+			}
 		}
 		else
 		{
@@ -162,7 +176,20 @@ if(!isset($_POST["id"]) && !isset($_POST["customer"]) && !isset($_POST["phone_nu
 						</tr>
 						<tr>
 							<td><div><b>Books:</b></div></td>
-							<td><div><code>' . RENT_BOOK_ID . '</code></div></td>
+							<td><div><code>');	
+		
+		$ret = null;
+
+		foreach($BOOK_ID as $x => $y)
+		{
+			@$ret .= '<a href="book.php?id=' . $y . '&tab=close" target="_BLANK">' . $BOOK_TITLE[$x] . '</a>, ';
+		}
+		
+		$ret = trim($ret, ", ");
+		
+		print($ret);
+					
+		print('				</code></div></td>
 						</tr>
 						<tr>
 							<td><div><b>Notes:</b></div></td>
