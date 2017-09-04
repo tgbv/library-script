@@ -1,0 +1,3 @@
+# For accurate headers management
+
+php_value output_buffering on
