@@ -9,12 +9,12 @@ class RENTS
 		
 		if($b == 1)
 		{
-			$ret = $mysql -> query("SELECT * FROM rents ORDER BY $a ASC LIMIT 10;");
+			$ret = $mysql -> query("SELECT * FROM ml_rents ORDER BY $a ASC LIMIT 10;");
 			$ret = mysqli_fetch_all($ret);
 		}
 		else if($b == -1)
 		{
-			$ret = $mysql -> query("SELECT * FROM rents ORDER BY $a DESC LIMIT 10;");
+			$ret = $mysql -> query("SELECT * FROM ml_rents ORDER BY $a DESC LIMIT 10;");
 			$ret = mysqli_fetch_all($ret);
 		}
 		else

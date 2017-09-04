@@ -7,11 +7,11 @@
 require_once("inc/ml_lib.php");
 require_once("inc/ml_html_data.php");
 
-header("Cache-Control: no-cache, no-store", true);
+MISC :: no_cache();
 
 if(!($ret = new ADMIN()) -> check_login())
 {
-	header("Location: /index.php", true, 301);
+	MISC :: redirect("/index.php");
 }
 
 if(isset($_COOKIE["history"]))
@@ -25,6 +25,7 @@ if(isset($_COOKIE["history"]))
 }
 else
 {
+	$_COOKIE["history"] = $_SERVER["REQUEST_URI"];
 	setcookie("history", $_SERVER["REQUEST_URI"], time() + (10 * 365 * 24 * 60 * 60), "/");
 }
 
@@ -45,7 +46,7 @@ if(!isset($_POST["author"]) && !isset($_POST["title"]) && !isset($_POST["number"
 	////////////////////</head>
 	
 	print('<body>');
-	print(HTML_GENERATE :: header("The library", "library.php", "t___1"));
+	print(HTML_GENERATE :: header("The library", HOME_PATH . "library.php", "t___1"));
 	print(__SEPARATOR_H_M);
 
 	if($_POST["author"] && $_POST["title"] && $_POST["number"] && $_POST["description"])

@@ -11,7 +11,7 @@ MISC :: no_cache();
 
 if(!($ret = new ADMIN()) -> check_login())
 {
-	header("Location: /index.php", true, 301);
+	MISC :: redirect("/index.php");
 }
 
 if(isset($_COOKIE["history"]))
@@ -37,7 +37,7 @@ else
 
 print(HTML_GENERATE :: head("Library Settings")); 
 
-print(HTML_GENERATE :: header("Library Settings", "settings.php", "t___3"));
+print(HTML_GENERATE :: header("Library Settings", HOME_PATH . "settings.php", "t___3"));
 
 print(__SEPARATOR_H_M);
 

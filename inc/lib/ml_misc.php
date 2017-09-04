@@ -20,4 +20,14 @@ class MISC extends SETTINGS
 	{
 		header("Cache-Control: no-cache, no-store", true);
 	}
+	
+	static function redirect($a)
+	{
+		$s = str_replace("\\", "/", realpath(getcwd()));
+		$s = str_replace($_SERVER["DOCUMENT_ROOT"], "", $s);
+		
+		$makeurl = "//" . $_SERVER["HTTP_HOST"] . "$s" . "$a";
+		
+		header("Location: $makeurl", true, 301);
+	}
 }

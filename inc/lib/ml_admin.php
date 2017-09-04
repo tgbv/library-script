@@ -20,7 +20,7 @@ class ADMIN
 				
 				setcookie("key", $pass, time()+3600, "/");
 				
-				header("Location: /library.php", true, 301);
+				MISC :: redirect("/library.php");
 			}
 			else
 			{
@@ -41,7 +41,7 @@ class ADMIN
 			exit();
 		}
 		
-		if($this -> mysql -> check("SELECT id FROM users WHERE users.password = '$_COOKIE[key]';"))
+		if($this -> mysql -> check("SELECT id FROM ml_users WHERE ml_users.password = '$_COOKIE[key]';"))
 		{
 			return true;
 		}
@@ -55,7 +55,7 @@ class ADMIN
 	
 	protected function check_email($a)
 	{
-		if($this -> mysql -> check("SELECT id FROM users WHERE users.email = '$a';"))
+		if($this -> mysql -> check("SELECT id FROM ml_users WHERE ml_users.email = '$a';"))
 		{
 			return true;
 		}
@@ -69,7 +69,7 @@ class ADMIN
 	{
 		$pass = hash("sha256", $a . CRYPT_STRING . $b);
 		
-		if($this -> mysql -> check("SELECT id FROM users WHERE users.password = '$pass';"))
+		if($this -> mysql -> check("SELECT id FROM ml_users WHERE ml_users.password = '$pass';"))
 		{
 			return true;
 		}
@@ -100,7 +100,7 @@ class SETTINGS extends ADMIN
 			{
 				$pass = hash("sha256", $a . CRYPT_STRING . $c);
 				
-				if($this -> mysql -> query("UPDATE users SET users.password = '$pass' WHERE users.email = '$a';"))
+				if($this -> mysql -> query("UPDATE ml_users SET ml_users.password = '$pass' WHERE ml_users.email = '$a';"))
 				{
 					setcookie("key", $pass, time()+3600, "/");
 					
@@ -128,7 +128,7 @@ class SETTINGS extends ADMIN
 		{
 			if(parent :: check_password($a, $c))
 			{
-				if($this -> mysql -> query("UPDATE users SET users.email = '$c' WHERE users.email = '$a';"))
+				if($this -> mysql -> query("UPDATE ml_users SET ml_users.email = '$c' WHERE ml_users.email = '$a';"))
 				{	
 					$pass = hash("sha256", $c . CRYPT_STRING . $b);
 					

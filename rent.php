@@ -7,11 +7,11 @@
 require_once("inc/ml_lib.php");
 require_once("inc/ml_html_data.php");
 
-header("Cache-Control: no-cache, no-store", true);
+MISC :: no_cache();
 
 if(!($ret = new ADMIN()) -> check_login())
 {
-	header("Location: /index.php", true, 301);
+	MISC :: redirect("/index.php");
 }
 
 if(!isset($_POST["id"]) && !isset($_POST["customer"]) && !isset($_POST["phone_number"]) && !isset($_POST["book_id"]) && !isset($_POST["notes"]))
@@ -34,7 +34,7 @@ if(!isset($_POST["id"]) && !isset($_POST["customer"]) && !isset($_POST["phone_nu
 	print('<body>');
 
 	/////////////////// <header>
-	print(HTML_GENERATE :: header("Rent details", "rent.php?id=$_GET[id]", "@\$__nothing"));
+	print(HTML_GENERATE :: header("Rent details", HOME_PATH . "rent.php?id=$_GET[id]", "@\$__nothing"));
 	/////////////////// </header>	
 	
 	print(__SEPARATOR_H_M);
@@ -51,7 +51,7 @@ if(!isset($_POST["id"]) && !isset($_POST["customer"]) && !isset($_POST["phone_nu
 		$mysql = new MYSQL(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 		$mysql -> connect();
 		
-		$ret = $mysql -> check("SELECT * FROM rents WHERE rents.id = '$_GET[id]';");
+		$ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.id = '$_GET[id]';");
 		
 		if($ret)
 		{
@@ -79,7 +79,7 @@ if(!isset($_POST["id"]) && !isset($_POST["customer"]) && !isset($_POST["phone_nu
 		$mysql = new MYSQL(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 		$mysql -> connect();
 		
-		$mysql -> query("DELETE FROM rents WHERE rents.id = '$_GET[id]';");
+		$mysql -> query("DELETE FROM ml_rents WHERE ml_rents.id = '$_GET[id]';");
 		
 		die("<script>alert('Rent record deleted with success!'); window.location = '$_COOKIE[history]';</script>");
 	}

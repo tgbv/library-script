@@ -19,7 +19,7 @@ class SEARCH
 		{
 			if($c === 1)
 			{
-				if($ret = $mysql -> check("SELECT * FROM books WHERE books.id = '$check[1]' ORDER BY $b ASC;"))
+				if($ret = $mysql -> check("SELECT * FROM ml_books WHERE ml_books.id = '$check[1]' ORDER BY $b ASC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
@@ -30,7 +30,7 @@ class SEARCH
 			}
 			else if($c === -1)
 			{
-				if($ret = $mysql -> check("SELECT * FROM books WHERE books.id = '$check[1]' ORDER BY $b DESC;"))
+				if($ret = $mysql -> check("SELECT * FROM ml_books WHERE ml_books.id = '$check[1]' ORDER BY $b DESC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
@@ -44,15 +44,15 @@ class SEARCH
 		{			
 			if($c == 1)
 			{
-				if($ret = $mysql -> check("SELECT * FROM books WHERE books.number = '$a' ORDER BY $b ASC;"))
+				if($ret = $mysql -> check("SELECT * FROM ml_books WHERE ml_books.number = '$a' ORDER BY $b ASC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM books WHERE books.author REGEXP '$a' ORDER BY $b ASC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_books WHERE ml_books.author REGEXP '$a' ORDER BY $b ASC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM books WHERE books.title REGEXP '$a' ORDER BY $b ASC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_books WHERE ml_books.title REGEXP '$a' ORDER BY $b ASC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
@@ -63,15 +63,15 @@ class SEARCH
 			}
 			else if($c == -1)
 			{
-				if($ret = $mysql -> check("SELECT * FROM books WHERE books.number = '$a' ORDER BY $b DESC;"))
+				if($ret = $mysql -> check("SELECT * FROM ml_books WHERE ml_books.number = '$a' ORDER BY $b DESC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM books WHERE books.author REGEXP '$a' ORDER BY $b DESC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_books WHERE ml_books.author REGEXP '$a' ORDER BY $b DESC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM books WHERE books.title REGEXP '$a' ORDER BY $b DESC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_books WHERE ml_books.title REGEXP '$a' ORDER BY $b DESC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
@@ -102,7 +102,7 @@ class SEARCH
 		{
 			if($c == 1)
 			{
-				if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.id = '$rid' ORDER BY $b ASC;"))
+				if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.id = '$rid' ORDER BY $b ASC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
@@ -113,7 +113,7 @@ class SEARCH
 			}
 			else if($c == -1)
 			{
-				if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.id = '$a' ORDER BY $b DESC;"))
+				if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.id = '$a' ORDER BY $b DESC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
@@ -127,19 +127,19 @@ class SEARCH
 		{
 			if($c == 1)
 			{
-				if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.customer = '$a' ORDER BY $b ASC;"))
+				if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.customer = '$a' ORDER BY $b ASC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.phone_number REGEXP '$a' ORDER BY $b ASC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.phone_number REGEXP '$a' ORDER BY $b ASC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.book_id REGEXP '$a' ORDER BY $b ASC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.book_id REGEXP '$a' ORDER BY $b ASC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.time REGEXP '$a' ORDER BY $b ASC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.time REGEXP '$a' ORDER BY $b ASC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
@@ -150,19 +150,19 @@ class SEARCH
 			}
 			else if($c == -1)
 			{
-				if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.customer = '$a' ORDER BY $b DESC;"))
+				if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.customer = '$a' ORDER BY $b DESC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.phone_number REGEXP '$a' ORDER BY $b DESC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.phone_number REGEXP '$a' ORDER BY $b DESC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.book_id REGEXP '$a' ORDER BY $b DESC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.book_id REGEXP '$a' ORDER BY $b DESC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}
-				else if($ret = $mysql -> check("SELECT * FROM rents WHERE rents.time REGEXP '$a' ORDER BY $b DESC;"))
+				else if($ret = $mysql -> check("SELECT * FROM ml_rents WHERE ml_rents.time REGEXP '$a' ORDER BY $b DESC;"))
 				{
 					return mysqli_fetch_all($ret);
 				}

@@ -9,12 +9,12 @@ class REGISTER
 		
 		if($b == 1)
 		{
-			$ret = $mysql -> query("SELECT * FROM books ORDER BY $a ASC LIMIT 10");
+			$ret = $mysql -> query("SELECT * FROM ml_books ORDER BY $a ASC LIMIT 10");
 			$ret = mysqli_fetch_all($ret);
 		}
 		else if($b == -1)
 		{
-			$ret = $mysql -> query("SELECT * FROM books ORDER BY $a DESC LIMIT 10");
+			$ret = $mysql -> query("SELECT * FROM ml_books ORDER BY $a DESC LIMIT 10");
 			$ret = mysqli_fetch_all($ret);
 		}
 		
@@ -30,17 +30,17 @@ class REGISTER
 		
 		$error = null;
 		
-		if($ret = $mysql -> check("SELECT id FROM books WHERE books.title = '$b' AND books.author = '$a';"))
+		if($ret = $mysql -> check("SELECT id FROM ml_books WHERE ml_books.title = '$b' AND ml_books.author = '$a';"))
 		{
 			$error .= "<br>Such book title written by this author already exists.";
 		}
-		else if($ret = $mysql -> check("SELECT id FROM books WHERE books.number = '$c';"))
+		else if($ret = $mysql -> check("SELECT id FROM ml_books WHERE ml_books.number = '$c';"))
 		{
 			$error .= "<br>Book number is already taken.";
 		}
 		else
 		{
-			if($mysql -> query("INSERT INTO books(author, title, number, description) VALUES('$a', '$b', '$c', '$d');"))
+			if($mysql -> query("INSERT INTO ml_books(author, title, number, description) VALUES('$a', '$b', '$c', '$d');"))
 			{
 				return "Book registered with success!";
 			}
@@ -70,12 +70,12 @@ class REGISTER
 		
 		foreach($bid as $x => $y)
 		{
-			if($mysql -> check("SELECT id FROM rents WHERE rents.customer = '$a' AND rents.phone_number = '$b' AND rents.book_id REGEXP '$y';"))
+			if($mysql -> check("SELECT id FROM ml_rents WHERE ml_rents.customer = '$a' AND ml_rents.phone_number = '$b' AND ml_rents.book_id REGEXP '$y';"))
 			{
 				$error .= "Such customer with the same phone number already registered book ID: $y.<br>";
 			}
 			
-			if(!$mysql -> check("SELECT id FROM books WHERE books.id = '$y';"))
+			if(!$mysql -> check("SELECT id FROM ml_books WHERE ml_books.id = '$y';"))
 			{
 				$error .= "Book ID: $y does not exist.<br>";
 			}
@@ -87,7 +87,7 @@ class REGISTER
 		}
 		else
 		{
-			if($ret = $mysql -> query("INSERT INTO rents(customer, phone_number, book_id, notes, time) VALUES('$a', '$b', '$c', '$d', '$time');"))
+			if($ret = $mysql -> query("INSERT INTO ml_rents(customer, phone_number, book_id, notes, time) VALUES('$a', '$b', '$c', '$d', '$time');"))
 			{
 				return "Rent created with success!";
 			}
@@ -107,9 +107,9 @@ class REGISTER
 		
 		$error = null;
 		
-		if($mysql -> check("SELECT id FROM books WHERE books.id = '$a';"))
+		if($mysql -> check("SELECT id FROM ml_books WHERE ml_books.id = '$a';"))
 		{
-			if($mysql -> query("UPDATE books SET author = '$b', title = '$c', number = '$d', description = '$e' WHERE books.id = '$a';"))
+			if($mysql -> query("UPDATE ml_books SET author = '$b', title = '$c', number = '$d', description = '$e' WHERE ml_books.id = '$a';"))
 			{
 				return "Book updated with success!";
 			}
@@ -138,14 +138,14 @@ class REGISTER
 		
 		$error = null;
 		
-		if($mysql -> check("SELECT id FROM rents WHERE rents.id = '$a';"))
+		if($mysql -> check("SELECT id FROM ml_rents WHERE ml_rents.id = '$a';"))
 		{
 			$d = str_replace(" ", "", $d);
 			$bid = explode(",", $d);
 			
 			foreach($bid as $x => $y)
 			{
-				if($mysql -> check("SELECT id FROM rents WHERE rents.id != '$a' AND rents.customer = '$b' AND rents.phone_number = '$c' AND rents.book_id REGEXP '$y';"))
+				if($mysql -> check("SELECT id FROM ml_rents WHERE ml_rents.id != '$a' AND ml_rents.customer = '$b' AND ml_rents.phone_number = '$c' AND ml_rents.book_id REGEXP '$y';"))
 				{
 					$error .= "Such customer with the same phone number already registered book id: $y.<br>";
 					
@@ -166,7 +166,7 @@ class REGISTER
 		}
 		else
 		{
-			if($mysql -> query("UPDATE rents SET customer = '$b', phone_number = '$c', book_id = '$d', notes = '$e' WHERE rents.id = '$a';"))
+			if($mysql -> query("UPDATE ml_rents SET customer = '$b', phone_number = '$c', book_id = '$d', notes = '$e' WHERE ml_rents.id = '$a';"))
 			{
 				return "Rent record updated with success!";
 			}

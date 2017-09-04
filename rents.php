@@ -7,11 +7,11 @@
 require_once("inc/ml_lib.php");
 require_once("inc/ml_html_data.php");
 
-header("Cache-Control: no-cache, no-store", true);
+MISC :: no_cache();
 
 if(!($ret = new ADMIN()) -> check_login())
 {
-	header("Location: /index.php", true, 301);
+	MISC :: redirect("/index.php");
 }
 
 if(isset($_COOKIE["history"]))
@@ -25,6 +25,7 @@ if(isset($_COOKIE["history"]))
 }
 else
 {
+	$_COOKIE["history"] = $_SERVER["REQUEST_URI"];
 	setcookie("history", $_SERVER["REQUEST_URI"], time() + (10 * 365 * 24 * 60 * 60), "/");
 }
 
@@ -50,7 +51,7 @@ if(!isset($_POST["customer_name"]) && !isset($_POST["customer_phone_number"]) &&
 <body>
 <?php 
 	//////////////// <header>
-	print(HTML_GENERATE :: header("The Rents", "rents.php", "t___2"));
+	print(HTML_GENERATE :: header("The Rents", HOME_PATH . "rents.php", "t___2"));
 	//////////////// </header>
 	
 	print(__SEPARATOR_H_M);

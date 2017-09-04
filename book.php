@@ -7,11 +7,11 @@
 require_once("inc/ml_lib.php");
 require_once("inc/ml_html_data.php");
 
-header("Cache-Control: no-cache, no-store", true);
+MISC :: no_cache();
 
 if(!($ret = new ADMIN()) -> check_login())
 {
-	header("Location: /index.php", true, 301);
+	MISC :: redirect("/index.php");
 }
 
 if(!isset($_POST["id"]) && !isset($_POST["author"]) && !isset($_POST["title"]) && !isset($_POST["number"]) && !isset($_POST["description"]))
@@ -51,7 +51,7 @@ if(!isset($_POST["id"]) && !isset($_POST["author"]) && !isset($_POST["title"]) &
 		$mysql = new MYSQL(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 		$mysql -> connect();
 		
-		$ret = $mysql -> check("SELECT * FROM books WHERE books.id = '$_GET[id]';");
+		$ret = $mysql -> check("SELECT * FROM ml_books WHERE ml_books.id = '$_GET[id]';");
 		
 		if($ret)
 		{
@@ -62,7 +62,7 @@ if(!isset($_POST["id"]) && !isset($_POST["author"]) && !isset($_POST["title"]) &
 			define("BOOK_NUMBER", $ret["number"]);	
 			define("BOOK_DESCRIPTION", $ret["description"]);
 
-			if($ret = $mysql -> query("SELECT id, customer FROM rents WHERE rents.book_id REGEXP '$_GET[id]';"))
+			if($ret = $mysql -> query("SELECT id, customer FROM ml_rents WHERE ml_rents.book_id REGEXP '$_GET[id]';"))
 			{
 				$ret = mysqli_fetch_all($ret);
 				
@@ -92,7 +92,7 @@ if(!isset($_POST["id"]) && !isset($_POST["author"]) && !isset($_POST["title"]) &
 		$mysql = new MYSQL(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 		$mysql -> connect();
 		
-		$mysql -> query("DELETE FROM books WHERE books.id = '$_GET[id]';");
+		$mysql -> query("DELETE FROM ml_books WHERE ml_books.id = '$_GET[id]';");
 		
 		die("<script>alert('Book deleted with success!'); window.location = '$_COOKIE[history]';</script>");
 	}
