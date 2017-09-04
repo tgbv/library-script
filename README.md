@@ -1,6 +1,4 @@
-library-script
-
-- v2.0 Stable. (although bug reports are welcome!)
+#library-script
 
 - v2.0 Stable. (although bug reports are welcome!)
 
@@ -8,8 +6,4 @@ A basic web app which helps you register books with their author and an unique n
 
 I have added an automated installer script. You will need a MySQL database and its credentials for installation.
 
-<<<<<<< HEAD
 Just upload the files to your www public directory and browse the website. Then follow the instructions :-)
-=======
-Just upload the files to your www public directory and browse the website. Then follow the instructions :-)
->>>>>>> cfe29c3850be6fcf4e207c6dc28b7fd1f26557ae
